@@ -1,0 +1,100 @@
+//include /-helpers/mixins
+
+
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		meta(name="description" content="Site about a scandinavian house design.")
+		title Scandinavian Design
+		link(href="https://fonts.googleapis.com/css?family=Dancing+Script:700|Roboto:400,700" rel="stylesheet")
+		link(rel="stylesheet" href="/css/styles.css")
+
+	body.grid-layout
+
+		// Header
+		header.header
+			.container.container-flex
+				// Logo
+				.header-logo
+					a(href="#" aria-label='Back to main page')
+						img(src="https://www.seoclerk.com/pics/551103-1TOqFD1502285018.jpg" alt="Site logo").header-logo-img
+					.logo-text
+						.logo-text__title Scandi Design
+						.logo-text__subtitle Simple & perfect
+				// Search field
+				.header-search
+					form.search-form
+						input(type="search" name="search" aria-label="Search through site content").search-field
+						button(type="submit").search-btn
+				// Main menu
+				nav.header-menu
+					ul.header-menu__list.unlist
+						each val in ["Houses", "Rooms", "Furniture", "Decorations", "Accessories", "Shops"]
+							li.header-menu__list-item
+								a(href="#" target="_blank" rel="noopener noreferrer")
+									span= val
+
+		// Main content
+		.content
+			.container
+				h1.page-heading You are <span class="repaint">welcome</span>
+				.container-menu
+					ul.container-menu__list.unlist
+						each val in ["Living room", "Kitchen", "Bathroom", "Bedroom"]
+							li.container-menu__list-item= val
+				// Slider
+				.container-slider
+					img(src="https://yorick.kz/wp-content/uploads/2016/05/7-810x542.jpg" alt="")
+				// Gallery
+
+				mixin galletyImg($src, $alt)
+					img(src= $src alt= $alt).gallery-item
+
+				.container-gallery
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "1")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "2")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "3")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "4")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "5")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "6")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "7")
+					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "8")
+				// Feature
+				main.container-feature
+
+					mixin feature($heading, $numImg, $text)
+						h3.feature-item__heading= $heading
+						.feature-item__img(class="feature-item__img--" + $numImg)
+						p.feature-item__text= $text
+
+					.feature-item
+						+feature("Scandi style", "1", "Scandinavian design ― an aesthetic marked by minimalism and functionality ― has been influential since its inception in the early 20th century, but design ideas are still coming out the Nordic region to this day.")
+					.feature-item
+						+feature("Style Trends", "2", "Traditionally, only a modest amount of leather could be found in nordic styles, but the Scandinavian trend is now embracing more leather, especially distressed and repurposed styles.")
+					.feature-item
+						+feature("Colors", "3", "White walls and cool blue and gray textiles are common. In some homes, brighter pops of color like yellow and orange are found in Marimekko fabrics and rugs.")
+					.feature-item
+						+feature("Materials", "4", "Scandinavian design principles promote eco-friendly homes with organic, sustainable building materials for flooring, walls, siding and roofing.")
+				// Brands
+				.container-brands
+
+					ul.brands-list
+
+						mixin brand($href, $src, $alt)
+							li.brands-list__item
+								a(href= $href target="_blank" rel="noopener noreferrer").brands-list__item-link
+									img(src= $src alt= $alt).brands-list__item-img
+
+						+brand("#", "http://1000logos.net/wp-content/uploads/2017/02/Font-of-the-IKEA-Logo.jpg", "EKEA")
+						+brand("https://gronandwhite.com", "https://cdn.shopify.com/s/files/1/0975/3828/files/copy_logo_gron_white_400x200.png?v=1518473658", "Groen and White")
+						+brand("http://string.se", "http://string.se/img/string_logo_gray.svg", "String")
+
+		// Footer
+		footer.footer
+			.container
+				.footer-btns
+					button So social
+					button So amazing
+				.footer-text © Scandi team <span class="repaint">♥</span>, 2018

@@ -1,0 +1,30 @@
+//-Repeat
+mixin repeat($limit)
+	- for (var i = 1; i <= $limit; i++)
+		block
+
+
+
+
+// Gallery item
+mixin galletyImg($src, $alt)
+	img(src= $src alt= $alt).gallery-item
+
+
+
+
+
+// Feature
+mixin feature($heading, $numImg, $text)
+	h3.feature-item__heading= $heading
+	.feature-item__img(class="feature-item__img--" + $numImg)
+	p.feature-item__text= $text
+
+
+
+
+// Brands
+mixin brand($href, $src, $alt)
+	li.brands-list__item
+		a(href= $href target="_blank" rel="noopener noreferrer").brands-list__item-link
+			img(src= $src alt= $alt).brands-list__item-img

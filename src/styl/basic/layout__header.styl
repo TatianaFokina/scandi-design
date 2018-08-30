@@ -1,0 +1,47 @@
+// Logo
+.header
+	padding 15px 0
+	border-bottom 2px solid $brand-2
+
+.header-logo
+	display flex
+	&-img
+		width 200px
+		height 100px
+
+.logo-text
+	margin-left 20px
+	&__title
+		font-size 1.6rem
+		text-transform uppercase
+	&__subtitle
+		font-size 0.9rem
+		color $brand-4
+
+// Search
+.header-search
+	margin-left 60px
+
+.search
+	&-form
+		width 360px
+		position relative
+	&-field
+		padding 5px
+		width 100%
+		display block
+		border 1px solid darken($brand-2, 13)
+		border-radius 3px
+	&-btn
+		width 30px
+		height 100%
+		position absolute
+		top 0
+		right 0
+		background $brand-4
+		border 0
+		border-radius 0 3px 3px 0
+
+// Padding after header
+//.content>:first-of-type
+//	padding-top calc(65px + 3rem)

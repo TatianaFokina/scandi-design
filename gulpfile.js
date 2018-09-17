@@ -37,7 +37,7 @@ var gulp = require('gulp'),
 	mergeRules = require('postcss-merge-rules'),
 	// Объединяет @media, помещает их в конец css. Не очень хорошо, что базовые свойства макета находятся в конце файла
 	combineCssMedia = require('css-mqpacker');
-	htmlbeautify = require('gulp-html-beautify'),
+htmlbeautify = require('gulp-html-beautify'),
 	plumber = require('gulp-plumber'),
 	notify = require("gulp-notify"),
 	// Меняет пути к файлам в css
@@ -137,7 +137,7 @@ gulp.task('__compilePug', function () {
 // Объединение файлов
 // ========================================================================
 // JS
-/*gulp.task('__mergeJS', function() {
+gulp.task('__mergeJS', function() {
 	// Список подключаемых файлов. Если подключаем один файл, то убрать скобки и запятые
 	return gulp.src(require('./src/js/js-list.json'))
 		.pipe(plumber())
@@ -146,7 +146,7 @@ gulp.task('__compilePug', function () {
 		// Сохраняем в папку
 		.pipe(gulp.dest('test/js'))
 		.pipe(browserSync.reload({stream: true}));
-});*/
+});
 
 
 
@@ -178,7 +178,7 @@ gulp.task('LiveReload', ['Build--Test'], function () {
 	});
 	gulp.watch('src/styl/**/*.styl', ['__compileStylus']);
 	gulp.watch('src/**/*.pug', ['__compilePug']);
-	// gulp.watch('src/js/**/*.js', ['__mergeJS']);
+	gulp.watch('src/js/**/*.js', ['__mergeJS']);
 });
 
 
@@ -211,7 +211,7 @@ gulp.task('__delTest', function() {
 // ========================================================================
 
 // →  "test"
-gulp.task('Build--Test', ['__compileStylus', '__compilePug'], function() {
+gulp.task('Build--Test', ['__compileStylus', '__mergeJS', '__compilePug'], function() {
 	// Шрифты
 	gulp.src('src/fonts/**/*')
 		.pipe(gulp.dest('test/fonts'));
@@ -226,7 +226,7 @@ gulp.task('Build--Test', ['__compileStylus', '__compilePug'], function() {
 });
 
 // → "dist"
-gulp.task('Build', ['__delDist', '__compileStylus', '__compilePug'], function() {
+gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug'], function() {
 	// Шрифты
 	gulp.src('src/fonts/**/*')
 		.pipe(gulp.dest('dist/fonts'));

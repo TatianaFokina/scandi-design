@@ -1,66 +1,92 @@
 //include /-helpers/mixins
 
-
 doctype html
 html(lang="en")
 	head
 		meta(charset="UTF-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1")
 		meta(name="description" content="Site about a scandinavian house design.")
-		title Scandinavian Design
+		title Scandi Design
 		link(href="https://fonts.googleapis.com/css?family=Dancing+Script:700|Roboto:400,700" rel="stylesheet")
-		link(rel="stylesheet" href="/css/styles.css")
+		link(rel="stylesheet" href="css/styles.css")
 
 	body.grid-layout
 
 		// Header
 		header.header
 			.container.container-flex
+
 				// Logo
 				.header-logo
-					a(href="#" aria-label='Back to main page')
-						img(src="https://www.seoclerk.com/pics/551103-1TOqFD1502285018.jpg" alt="Site logo").header-logo-img
+					a(href="#" aria-label="Back to main page")
+						img(src="../imgs/logo.svg" alt="Site logo").logo-img
 					.logo-text
 						.logo-text__title Scandi Design
 						.logo-text__subtitle Simple & perfect
+
 				// Search field
 				.header-search
 					form.search-form
 						input(type="search" name="search" aria-label="Search through site content").search-field
 						button(type="submit").search-btn
+
 				// Main menu
-				nav.header-menu
-					ul.header-menu__list.unlist
+				nav.menu
+					ul.menu__list
 						each val in ["Houses", "Rooms", "Furniture", "Decorations", "Accessories", "Shops"]
-							li.header-menu__list-item
-								a(href="#" target="_blank" rel="noopener noreferrer")
-									span= val
+							li.menu__item
+								a(href="#").menu__link
+									span.menu__name= val
 
 		// Main content
 		.content
 			.container
 				h1.page-heading You are <span class="repaint">welcome</span>
-				.container-menu
-					ul.container-menu__list.unlist
-						each val in ["Living room", "Kitchen", "Bathroom", "Bedroom"]
-							li.container-menu__list-item= val
+
 				// Slider
-				.container-slider
-					img(src="https://yorick.kz/wp-content/uploads/2016/05/7-810x542.jpg" alt="")
+				.container-carousel
+					.carousel
+						ul.carousel-list
+
+							mixin slide($link, $slideNum, $dataNum, $name)
+								li(class="carousel-slide carousel-slide--" + $slideNum)
+									img(src= $link data-slide-number= $dataNum alt= $name).carousel-slide__img
+
+							+slide("../imgs/slides/slider-floor.jpg", "1", "1", "Floor pattern")
+							+slide("../imgs/slides/slider-rouge.jpg", "2", "2", "Marimekko fabric")
+							+slide("../imgs/slides/slider-wall.jpg", "3", "3", "Wall pattern")
+
+						button(role="button" aria-pressed="false" aria-label="Next slide").slide-button.slide-button__prev &#10094;
+						button(role="button" aria-pressed="false" aria-label="Previous slide").slide-button.slide-button__next &#10095;
+
+						.carousel-dots
+
+							mixin repeat($limit)
+								- for (var $i = 1; $i <= $limit; $i++)
+									.dot
+
+							.dot.js-dot-active
+							+repeat(2)
+
 				// Gallery
 
-				mixin galletyImg($src, $alt)
-					img(src= $src alt= $alt).gallery-item
+				// todo Заменить на цикл!
+				mixin galletyImg($aria, $numCard, $heightMod, $h)
+					a(class="card card--" + $numCard + " card--height-" + $heightMod href="#" aria-label=$aria)
+						div(class="card-img card-img--" + $numCard)
+						.gallery-card__layer
+						.gallery-card__heading=$h
 
 				.container-gallery
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "1")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "2")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "3")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "4")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "5")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "6")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "7")
-					+galletyImg("http://zhivotnue.ru/image/dicie_zhivotnue/gruzynu/bober/bober_2.jpg", "8")
+					+galletyImg("", "1", "1", "Living Rooms")
+					+galletyImg("", "2", "2", "Kitchens")
+					+galletyImg("", "3", "2", "Bed Rooms")
+					+galletyImg("", "4", "2", "Bath Rooms")
+					+galletyImg("", "5", "2", "Paints")
+					+galletyImg("", "6", "1", "Lamps")
+					+galletyImg("", "7", "2", "Materials")
+					+galletyImg("", "8", "2", "Furniture")
+
 				// Feature
 				main.container-feature
 
@@ -77,24 +103,35 @@ html(lang="en")
 						+feature("Colors", "3", "White walls and cool blue and gray textiles are common. In some homes, brighter pops of color like yellow and orange are found in Marimekko fabrics and rugs.")
 					.feature-item
 						+feature("Materials", "4", "Scandinavian design principles promote eco-friendly homes with organic, sustainable building materials for flooring, walls, siding and roofing.")
+
 				// Brands
 				.container-brands
-
 					ul.brands-list
 
-						mixin brand($href, $src, $alt)
+						mixin brand($href, $aria, $src, $alt)
 							li.brands-list__item
-								a(href= $href target="_blank" rel="noopener noreferrer").brands-list__item-link
+								a(href= $href target="_blank" rel="noopener noreferrer" aria-label= $aria).brands-list__item-link
 									img(src= $src alt= $alt).brands-list__item-img
 
-						+brand("#", "http://1000logos.net/wp-content/uploads/2017/02/Font-of-the-IKEA-Logo.jpg", "EKEA")
-						+brand("https://gronandwhite.com", "https://cdn.shopify.com/s/files/1/0975/3828/files/copy_logo_gron_white_400x200.png?v=1518473658", "Groen and White")
-						+brand("http://string.se", "http://string.se/img/string_logo_gray.svg", "String")
+						+brand("https://www.ikea.com", "Go to IKEA site", "../imgs/brand-IKEA.png", "IKEA")
+						+brand("https://gronandwhite.com", "Go to Groen and White site", "../imgs/brand-gron-white.png", "Groen and White")
+						+brand("http://string.se", "Go to String site", "../imgs/brand-string.svg", "String")
 
 		// Footer
 		footer.footer
 			.container
-				.footer-btns
-					button So social
-					button So amazing
-				.footer-text © Scandi team <span class="repaint">♥</span>, 2018
+				.footer-social
+					ul.social-links
+
+						mixin spriteBtn($aria, $modifier)
+							li.social-links__item
+								a(href="#" target="_blank" rel="noopener noreferrer" aria-label= $aria).social-link(class="social-link--" + $modifier)
+
+						+spriteBtn("Facebook", "fb")
+						+spriteBtn("Instagram", "ig")
+						+spriteBtn("Pinterest", "pin")
+				.footer-right © With <span class="repaint">♥</span> Scandi team, 2018
+				.footer-source The source code is hosted on <a href="#" class="list-item-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+
+	script(src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+	script(src="js/all.js")

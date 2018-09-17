@@ -6,74 +6,155 @@ $border-color = 2px solid desaturate(lighten($brand-4, 15), 35)
 .repaint
 	color #FC8F9B
 
-.new-line
-	width 100%
 
-.container-flex
-	display flex
-	
-.unlist
-	list-style none
-	
+
 
 // Main content
 .page-heading
 	text-align center
 
-// Content menu
-
 // Slider
-.container-slider
-	margin 20px 0 50px 0
-	& img
-		width 100%
-		height 300px
-		object-fit cover
+.container-carousel
+	max-width 100%
+	
+.carousel
+	width 100%
+	display table
+	position relative
+	overflow hidden
+	&-list
+		margin 0
+		padding 0
+		width calc(100% * 4)
+		position relative
+		top 0
+		left 0
+		list-style none
+		transition all 1s ease-in-out // Animation!
+	&-slide
+		width calc(100%/4)
+		display inline
+		float left
+		&__img
+			max-width 100%
+			height auto
+
+.slide-button
+	position absolute
+	top calc(50% - 25px)
+	background $brand-4
+	font-size 35px
+	color #fff
+	border 0
+	cursor pointer
+	&__prev
+		left 0
+		border-radius 0 5px 5px 0
+	&__next
+		right 0
+		border-radius 5px 0 0 5px
+	&:hover
+		background darken($brand-4, 10)
+
+.carousel-dots
+	width 100%
+	display flex
+	justify-content center
+	position absolute
+	bottom 20px
+
+.dot
+	margin-right 4px
+	width 15px
+	height @width
+	background $brand-4
+	border-radius 50%
+	cursor pointer
+	&:hover
+		background darken($brand-4, 15)
+
+.js-dot-active
+	background darken($brand-4, 15)
+
+
+
 
 // Gallery
 .container-gallery
 	display grid
 	grid-gap 15px
 
-.gallery-item
-	width 100%
-	display block
-	object-fit cover
-	&:nth-child(1)
-		height 385px
+.card
+	position relative
+	&--1
 		grid-row 1 / span 2
 		grid-column 1 / span 2
-	&:nth-child(2)
-		height 185px
+	&--2
 		grid-row 1 / span 1
 		grid-column 3 / span 2
-	&:nth-child(3)
-		height 185px
+	&--3
 		grid-row 2 / span 4
 		grid-column 3 / span 2
-	&:nth-child(4)
-		height 185px
+	&--4
 		grid-row 3 / span 4
 		grid-column 1 / span 2
-	&:nth-child(5)
-		height 185px
+	&--5
 		grid-row 5 / span 4
 		grid-column 1 / span 2
-	&:nth-child(6)
-		height 385px
+	&--6
 		grid-row 3 / span 4
 		grid-column 3 / span 1
-	&:nth-child(7)
-		height 185px
+	&--7
 		grid-row 3 / span 2
 		grid-column 4 / span 1
-	&:nth-child(8)
-		height 185px
+	&--8
 		grid-row 5 / span 2
 		grid-column 4 / span 1
+	&--height-1
+		height 385px
+	&--height-2
+		height 185px
+		
+.card-img
+	width 100%
+	height 100%
+	background-size cover
+	background-repeat no-repeat
+	background-position 50% 50%
+	&--1
+		background-image url("/imgs/gallery/prew-scandi-livingroom.jpg")
+	&--2
+		background-image url("/imgs/gallery/prew-scandi-kitchen.jpg")
+	&--3
+		background-image url("/imgs/gallery/prew-scandi-bedroom.jpg")
+	&--4
+		background-image url("/imgs/gallery/prew-scandi-bathroom.jpg")
+	&--5
+		background-image url("/imgs/gallery/prew-scandi-paint.jpg")
+	&--6
+		background-image url("/imgs/gallery/prew-scandi-lamp.jpg")
+	&--7
+		background-image url("/imgs/gallery/prew-scandi-materials.jpg")
+	&--8
+		background-image url("/imgs/gallery/prew-scandi-furniture.jpg")
 
-
-
+.gallery-card
+	&__layer
+		width 100%
+		height 100%
+		position absolute
+		top 0
+		left 0
+		background-color rgba(107, 107, 107, 0.69)
+	&__heading
+		position absolute
+		top 50%
+		left 50%
+		transform translate(-50%, -50%)
+		color $brand-1
+		font-family "Dancing Script", cursive
+		font-weight bold
+		font-size 2rem
 
 // Feature
 .container-feature
@@ -81,6 +162,8 @@ $border-color = 2px solid desaturate(lighten($brand-4, 15), 35)
 	display flex
 
 .feature-item
+	display flex
+	flex-direction column
 	&:not(:last-of-type)
 		margin-right 60px
 	// Feature headings
@@ -88,15 +171,23 @@ $border-color = 2px solid desaturate(lighten($brand-4, 15), 35)
 		text-align center
 	// Feature images
 	&__img
-		width 52px
+		width 50px
 		height 50px
-		background-image url("https://png.icons8.com/ios/1600/design.png")
+		align-self center
 		background-size cover
 		background-position 50% 50%
 		background-repeat no-repeat
+		&--1
+			background-image url("../imgs/icons/ico-feature-about.svg")
+		&--2
+			background-image url("../imgs/icons/ico-feature-trends.svg")
+		&--3
+			background-image url("../imgs/icons/ico-feature-color.svg")
+		&--4
+			background-image url("../imgs/icons/ico-feature-materials.svg")
 	// Feature texts
 	&__text
-		margin-top 30px
+		margin-top 20px
 		padding-top 20px
 		border-top $border-color
 
@@ -110,20 +201,14 @@ $border-color = 2px solid desaturate(lighten($brand-4, 15), 35)
 	background lighten($brand-4, 62)
 
 .brands-list
+	margin 20px 0 !important // todo Как обойтись тут без !important
 	display flex
-	@extend .unlist
 	align-items center
+	list-style none
+	&__item
+		padding 0 30px 0
 	&__item-link
 		text-decoration none
 	&__item-img
 		width 130px
 		height auto
-
-
-
-
-
-
-
-.container-flex
-	flex-flow row wrap

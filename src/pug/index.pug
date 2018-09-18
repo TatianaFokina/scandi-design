@@ -71,18 +71,21 @@ html(lang="en")
 				// Gallery
 
 				// todo Заменить на цикл!
-				mixin galletyImg($aria, $numCard, $heightMod, $h)
+				mixin galletyImg($aria, $numCard, $heightMod, $h, $text)
 					a(class="card card--" + $numCard + " card--height-" + $heightMod href="#" aria-label=$aria)
 						div(class="card-img card-img--" + $numCard)
-						.gallery-card__layer
-						.gallery-card__heading=$h
+						.card__overlay
+						.card__content-wrp
+							.card__content
+								.card__title=$h
+								.card__text=$text
 
 				.container-gallery
-					+galletyImg("", "1", "1", "Living Rooms")
-					+galletyImg("", "2", "2", "Kitchens")
-					+galletyImg("", "3", "2", "Bed Rooms")
-					+galletyImg("", "4", "2", "Bath Rooms")
-					+galletyImg("", "5", "2", "Paints")
+					+galletyImg("", "1", "1", "Living Rooms", "A living room is a room in a residential house or apartment for relaxing and socializing.")
+					+galletyImg("", "2", "2", "Kitchens", "A kitchen is a room or part of a room used for cooking.")
+					+galletyImg("", "3", "2", "Bed Rooms", "A bedroom is a room where people sleep.")
+					+galletyImg("", "4", "2", "Bath Rooms", "A bathroom is a room in the home for personal hygiene activities.")
+					+galletyImg("", "5", "2", "Paintings", "A painting is a piece of art. It can be posters or pictures.")
 					+galletyImg("", "6", "1", "Lamps")
 					+galletyImg("", "7", "2", "Materials")
 					+galletyImg("", "8", "2", "Furniture")
@@ -116,6 +119,7 @@ html(lang="en")
 						+brand("https://www.ikea.com", "Go to IKEA site", "../imgs/brand-IKEA.png", "IKEA")
 						+brand("https://gronandwhite.com", "Go to Groen and White site", "../imgs/brand-gron-white.png", "Groen and White")
 						+brand("http://string.se", "Go to String site", "../imgs/brand-string.svg", "String")
+						+brand("https://muuto.com", "Go to Muuto site", "../imgs/brand-muuto.svg", "Muuto")
 
 		// Footer
 		footer.footer
@@ -131,7 +135,7 @@ html(lang="en")
 						+spriteBtn("Instagram", "ig")
 						+spriteBtn("Pinterest", "pin")
 				.footer-right © With <span class="repaint">♥</span> Scandi team, 2018
-				.footer-source The source code is hosted on <a href="#" class="list-item-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+				.footer-source The source code is hosted on <a href="https://github.com/TatianaFokina/scandi-design" class="list-item-link" target="_blank" rel="noopener noreferrer">GitHub</a>
 
 	script(src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 	script(src="js/all.js")

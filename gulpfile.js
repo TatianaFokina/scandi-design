@@ -54,7 +54,7 @@ htmlbeautify = require('gulp-html-beautify'),
 
 // ========================================================================
 // Компиляция
-// ========================================================================
+// ========================================================================R
 // Stylus (all.styl → test/)
 gulp.task('__compileStylus', function () {
 	var $postcss_plugins = [
@@ -62,7 +62,7 @@ gulp.task('__compileStylus', function () {
 		mergeRules
 	];
 
-	return gulp.src('src/styl/styles.styl')
+	return gulp.docs('docs/styl/styles.styl')
 		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(CompileStylus({'include css': true}))
 		.pipe(autoprefixer({
@@ -89,7 +89,7 @@ gulp.task('__compileStylus_dist', function () {
 		})*/
 	];
 
-	return gulp.src('src/styl/all.styl')
+	return gulp.docs('docs/styl/all.styl')
 		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(CompileStylus({'include css': true}))
 		.pipe(autoprefixer({
@@ -107,15 +107,15 @@ gulp.task('__compileStylus_dist', function () {
 
 // Pug
 gulp.task('__compilePug', function () {
-	return gulp.src([
-		'src/pug/**/*.pug',
-		'!src/pug/-helpers/**/*',
-		'!src/pug/-templates/**/*',
-		'!src/pug/**/*.inc.pug',
-		'!src/pug/**/*.tpl.pug',
-		'!src/pug/**/*--inc.pug',
-		'!src/pug/**/*--tpl.pug',
-		'!src/pug/**/_*.pug'
+	return gulp.docs([
+		'docs/pug/**/*.pug',
+		'!docs/pug/-helpers/**/*',
+		'!docs/pug/-templates/**/*',
+		'!docs/pug/**/*.inc.pug',
+		'!docs/pug/**/*.tpl.pug',
+		'!docs/pug/**/*--inc.pug',
+		'!docs/pug/**/*--tpl.pug',
+		'!docs/pug/**/_*.pug'
 	])
 		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(pug())
@@ -139,7 +139,7 @@ gulp.task('__compilePug', function () {
 // JS
 gulp.task('__mergeJS', function() {
 	// Список подключаемых файлов. Если подключаем один файл, то убрать скобки и запятые
-	return gulp.src(require('./src/js/js-list.json'))
+	return gulp.docs(require('./docs/js/js-list.json'))
 		.pipe(plumber())
 		// Собираем их в кучу в новом файле
 		.pipe(concat('all.js'))
@@ -158,8 +158,8 @@ gulp.task('__mergeJS', function() {
 // ========================================================================
 // Следит за папкой "test"
 gulp.task('Watch', ['Build--Test'], function () {
-	gulp.watch('src/styl/**/*.styl', ['__compileStylus']);
-	gulp.watch(['src/**/*.pug','!src/helpers/**/*'], ['__compilePug']);
+	gulp.watch('docs/styl/**/*.styl', ['__compileStylus']);
+	gulp.watch(['docs/**/*.pug','!docs/helpers/**/*'], ['__compilePug']);
 });
 
 // Следит за папкой "test" и открывает в браузере
@@ -176,9 +176,9 @@ gulp.task('LiveReload', ['Build--Test'], function () {
 		// Отключаем уведомления
 		notify: false
 	});
-	gulp.watch('src/styl/**/*.styl', ['__compileStylus']);
-	gulp.watch('src/**/*.pug', ['__compilePug']);
-	gulp.watch('src/js/**/*.js', ['__mergeJS']);
+	gulp.watch('docs/styl/**/*.styl', ['__compileStylus']);
+	gulp.watch('docs/**/*.pug', ['__compilePug']);
+	gulp.watch('docs/js/**/*.js', ['__mergeJS']);
 });
 
 
@@ -213,26 +213,26 @@ gulp.task('__delTest', function() {
 // →  "test"
 gulp.task('Build--Test', ['__compileStylus', '__mergeJS', '__compilePug'], function() {
 	// Шрифты
-	gulp.src('src/fonts/**/*')
+	gulp.docs('docs/fonts/**/*')
 		.pipe(gulp.dest('test/fonts'));
 
 	// Favicons
-	gulp.src('src/favicons/**/*')
+	gulp.docs('docs/favicons/**/*')
 		.pipe(gulp.dest('test/favicons'));
 
 	// Images
-	gulp.src('src/imgs/**/*')
+	gulp.docs('docs/imgs/**/*')
 		.pipe(gulp.dest('test/imgs'));
 });
 
 // → "dist"
 gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug'], function() {
 	// Шрифты
-	gulp.src('src/fonts/**/*')
+	gulp.docs('docs/fonts/**/*')
 		.pipe(gulp.dest('dist/fonts'));
 
 	// Favicons
-	gulp.src('src/favicons/**/*')
+	gulp.docs('docs/favicons/**/*')
 		.pipe(cache(imagemin([
 			imagemin.gifsicle({interlaced: true}),
 			imagemin.jpegtran({progressive: true}),
@@ -244,7 +244,7 @@ gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug']
 	// Images (с оптимизацией)
 
 	// Выбираем папку с исходными изображениями
-	gulp.src('src/imgs/**/*')
+	gulp.docs('docs/imgs/**/*')
 		.pipe(cache(imagemin([
 			imagemin.gifsicle({interlaced: true}),
 			imagemin.jpegtran({progressive: true}),
@@ -254,7 +254,7 @@ gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug']
 		.pipe(gulp.dest('dist/imgs'));
 
 	// Copy html
-	gulp.src('test/**/*.html')
+	gulp.docs('test/**/*.html')
 		.pipe(gulp.dest("dist"));
 
 	// CSS
@@ -264,9 +264,9 @@ gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug']
 		})
 	];
 
-	gulp.src('test/css/**/*.css')
+	gulp.docs('test/css/**/*.css')
 		.pipe(purify(['test/**/*.html'], { // Убирает неиспользуемые стили
-			whitelist: require('./src/js/whitelist-purify.json') // Массив с селекторами. Array of selectors to always leave in. Ex. ['button-active', '*modal*'] this will leave any selector that includes modal in it and selectors that match button-active. (wrapping the string with *'s, leaves all selectors that include it)
+			whitelist: require('./docs/js/whitelist-purify.json') // Массив с селекторами. Array of selectors to always leave in. Ex. ['button-active', '*modal*'] this will leave any selector that includes modal in it and selectors that match button-active. (wrapping the string with *'s, leaves all selectors that include it)
 		}))
 		//.pipe(gulp_postcss($postcss_plugins))
 		// Добавляем суффикс .min
@@ -287,7 +287,7 @@ gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug']
 		.pipe(gulp.dest('dist/css'));
 
 	// Сжатие JS
-	gulp.src('test/js/**/*.js')
+	gulp.docs('test/js/**/*.js')
 		.pipe(plumber())
 		// Сжимаем JS-файл
 		.pipe(uglify())
@@ -295,7 +295,7 @@ gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug']
 		.pipe(gulp.dest('dist/js'));
 
 	// Copy .txt
-	gulp.src('src/*.txt')
+	gulp.docs('docs/*.txt')
 		.pipe(gulp.dest("dist"));
 });
 

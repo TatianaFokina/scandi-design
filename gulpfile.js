@@ -54,15 +54,15 @@ htmlbeautify = require('gulp-html-beautify'),
 
 // ========================================================================
 // Компиляция
-// ========================================================================R
-// Stylus (all.styl → test/)
+// ========================================================================
+// Stylus (styles.styl → test/)
 gulp.task('__compileStylus', function () {
 	var $postcss_plugins = [
 		postcss_inline_svg,
 		mergeRules
 	];
 
-	return gulp.docs('docs/styl/styles.styl')
+	return gulp.src('src/styl/styles.styl')
 		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(CompileStylus({'include css': true}))
 		.pipe(autoprefixer({
@@ -79,17 +79,14 @@ gulp.task('__compileStylus', function () {
 		.pipe(browserSync.reload({stream: true}));
 });
 
-// Stylus (all.styl → dist/)
-gulp.task('__compileStylus_dist', function () {
+// Stylus (styles.styl → docs/)
+gulp.task('__compileStylus_docs', function () {
 	var $postcss_plugins = [
 		postcss_inline_svg,
 		mergeRules
-		/*combineCssMedia({
-			sort: true
-		})*/
 	];
 
-	return gulp.docs('docs/styl/all.styl')
+	return gulp.src('src/styl/styles.styl')
 		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(CompileStylus({'include css': true}))
 		.pipe(autoprefixer({
@@ -101,26 +98,25 @@ gulp.task('__compileStylus_dist', function () {
 			cascade: false
 		}))
 		.pipe(gulp_postcss($postcss_plugins))
-		.pipe(gulp.dest('dist/css'))
+		.pipe(gulp.dest('docs/css'))
 		.pipe(browserSync.reload({stream: true}));
 });
 
 // Pug
 gulp.task('__compilePug', function () {
-	return gulp.docs([
-		'docs/pug/**/*.pug',
-		'!docs/pug/-helpers/**/*',
-		'!docs/pug/-templates/**/*',
-		'!docs/pug/**/*.inc.pug',
-		'!docs/pug/**/*.tpl.pug',
-		'!docs/pug/**/*--inc.pug',
-		'!docs/pug/**/*--tpl.pug',
-		'!docs/pug/**/_*.pug'
+	return gulp.src([
+		'src/pug/**/*.pug',
+		'!src/pug/-helpers/**/*',
+		'!src/pug/-templates/**/*',
+		'!src/pug/**/*.inc.pug',
+		'!src/pug/**/*.tpl.pug',
+		'!src/pug/**/*--inc.pug',
+		'!src/pug/**/*--tpl.pug',
+		'!src/pug/**/_*.pug'
 	])
 		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
 		.pipe(pug())
 		// Разметка НЕ в одну строку
-		//.pipe(pug({pretty: true}))
 		.pipe(htmlbeautify({
 			"indent_with_tabs": true
 		}))
@@ -139,7 +135,7 @@ gulp.task('__compilePug', function () {
 // JS
 gulp.task('__mergeJS', function() {
 	// Список подключаемых файлов. Если подключаем один файл, то убрать скобки и запятые
-	return gulp.docs(require('./docs/js/js-list.json'))
+	return gulp.src(require('./src/js/js-list.json'))
 		.pipe(plumber())
 		// Собираем их в кучу в новом файле
 		.pipe(concat('all.js'))
@@ -158,8 +154,8 @@ gulp.task('__mergeJS', function() {
 // ========================================================================
 // Следит за папкой "test"
 gulp.task('Watch', ['Build--Test'], function () {
-	gulp.watch('docs/styl/**/*.styl', ['__compileStylus']);
-	gulp.watch(['docs/**/*.pug','!docs/helpers/**/*'], ['__compilePug']);
+	gulp.watch('src/styl/**/*.styl', ['__compileStylus']);
+	gulp.watch(['src/**/*.pug','!src/helpers/**/*'], ['__compilePug']);
 });
 
 // Следит за папкой "test" и открывает в браузере
@@ -176,9 +172,9 @@ gulp.task('LiveReload', ['Build--Test'], function () {
 		// Отключаем уведомления
 		notify: false
 	});
-	gulp.watch('docs/styl/**/*.styl', ['__compileStylus']);
-	gulp.watch('docs/**/*.pug', ['__compilePug']);
-	gulp.watch('docs/js/**/*.js', ['__mergeJS']);
+	gulp.watch('src/styl/**/*.styl', ['__compileStylus']);
+	gulp.watch('src/**/*.pug', ['__compilePug']);
+	gulp.watch('src/js/**/*.js', ['__mergeJS']);
 });
 
 
@@ -189,9 +185,9 @@ gulp.task('LiveReload', ['Build--Test'], function () {
 // ========================================================================
 // Удаление папок
 // ========================================================================
-// dist
-gulp.task('__delDist', function() {
-	return del.sync('dist');
+// docs
+gulp.task('__deldocs', function() {
+	return del.sync('docs');
 });
 // test
 gulp.task('__delTest', function() {
@@ -213,49 +209,49 @@ gulp.task('__delTest', function() {
 // →  "test"
 gulp.task('Build--Test', ['__compileStylus', '__mergeJS', '__compilePug'], function() {
 	// Шрифты
-	gulp.docs('docs/fonts/**/*')
+	gulp.src('src/fonts/**/*')
 		.pipe(gulp.dest('test/fonts'));
 
 	// Favicons
-	gulp.docs('docs/favicons/**/*')
+	gulp.src('src/favicons/**/*')
 		.pipe(gulp.dest('test/favicons'));
 
 	// Images
-	gulp.docs('docs/imgs/**/*')
+	gulp.src('src/imgs/**/*')
 		.pipe(gulp.dest('test/imgs'));
 });
 
-// → "dist"
-gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug'], function() {
+// → "docs"
+gulp.task('Build', ['__deldocs', '__compileStylus', '__mergeJS', '__compilePug'], function() {
 	// Шрифты
-	gulp.docs('docs/fonts/**/*')
-		.pipe(gulp.dest('dist/fonts'));
+	gulp.src('src/fonts/**/*')
+		.pipe(gulp.dest('docs/fonts'));
 
 	// Favicons
-	gulp.docs('docs/favicons/**/*')
+	gulp.src('src/favicons/**/*')
 		.pipe(cache(imagemin([
 			imagemin.gifsicle({interlaced: true}),
 			imagemin.jpegtran({progressive: true}),
 			imagemin.optipng({optimizationLevel: 7}),
 			imagemin.svgo({plugins: [{removeViewBox: true}]})
 		])))
-		.pipe(gulp.dest('dist/favicons'));
+		.pipe(gulp.dest('docs/favicons'));
 
 	// Images (с оптимизацией)
 
 	// Выбираем папку с исходными изображениями
-	gulp.docs('docs/imgs/**/*')
+	gulp.src('src/imgs/**/*')
 		.pipe(cache(imagemin([
 			imagemin.gifsicle({interlaced: true}),
 			imagemin.jpegtran({progressive: true}),
 			imagemin.optipng({optimizationLevel: 7}),
 			imagemin.svgo({plugins: [{removeViewBox: true}]})
 		])))
-		.pipe(gulp.dest('dist/imgs'));
+		.pipe(gulp.dest('docs/imgs'));
 
 	// Copy html
-	gulp.docs('test/**/*.html')
-		.pipe(gulp.dest("dist"));
+	gulp.src('test/**/*.html')
+		.pipe(gulp.dest("docs"));
 
 	// CSS
 	var $postcss_plugins = [
@@ -264,39 +260,23 @@ gulp.task('Build', ['__delDist', '__compileStylus', '__mergeJS', '__compilePug']
 		})
 	];
 
-	gulp.docs('test/css/**/*.css')
-		.pipe(purify(['test/**/*.html'], { // Убирает неиспользуемые стили
-			whitelist: require('./docs/js/whitelist-purify.json') // Массив с селекторами. Array of selectors to always leave in. Ex. ['button-active', '*modal*'] this will leave any selector that includes modal in it and selectors that match button-active. (wrapping the string with *'s, leaves all selectors that include it)
-		}))
-		//.pipe(gulp_postcss($postcss_plugins))
-		// Добавляем суффикс .min
-		//.pipe(rename({suffix: '.min'}))
-		/*.pipe(modifyCssUrls({ // Меняет пути к файлам в css
-			modify: function (url, filePath) {
-				return '/assets/dist' + url;
-			}/!*,
-			prepend: 'https://fancycdn.com/',
-			append: '?cache-buster'*!/
-		}))*/
-		// Меняет пути к файлам в css
-		//.pipe(replace('\"/fonts', '\"/assets/dist/fonts'))
-		//.pipe(replace('\'/fonts', '\'/assets/dist/fonts'))
+	gulp.src('test/css/**/*.css')
 		// Сжимаем
 		.pipe(cssnano())
 		// Сохраняем в папку
-		.pipe(gulp.dest('dist/css'));
+		.pipe(gulp.dest('docs/css'));
 
 	// Сжатие JS
-	gulp.docs('test/js/**/*.js')
+	gulp.src('test/js/**/*.js')
 		.pipe(plumber())
 		// Сжимаем JS-файл
 		.pipe(uglify())
 		// Сохраняем в папку
-		.pipe(gulp.dest('dist/js'));
+		.pipe(gulp.dest('docs/js'));
 
 	// Copy .txt
-	gulp.docs('docs/*.txt')
-		.pipe(gulp.dest("dist"));
+	gulp.src('src/*.txt')
+		.pipe(gulp.dest("docs"));
 });
 
 

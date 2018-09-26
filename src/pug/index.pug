@@ -17,7 +17,7 @@ html(lang="en")
 				//- Logo
 				.header-logo
 					a(href="#" aria-label="Back to main page")
-						img(src="../imgs/logo.svg" alt="Site logo").logo-img
+						img(src="imgs/logo.svg" alt="Site logo").logo-img
 					.logo-text
 						.logo-text__title Scandi Design
 						.logo-text__subtitle Simple & perfect
@@ -50,9 +50,9 @@ html(lang="en")
 								li(class="carousel-slide carousel-slide--" + $slideNum)
 									img(src= $link data-slide-number= $dataNum alt= $name).carousel-slide__img
 
-							+slide("../imgs/slides/slider-floor.jpg", "1", "1", "Floor pattern")
-							+slide("../imgs/slides/slider-rouge.jpg", "2", "2", "Marimekko fabric")
-							+slide("../imgs/slides/slider-wall.jpg", "3", "3", "Wall pattern")
+							+slide("imgs/slides/slider-floor.jpg", "1", "1", "Floor pattern")
+							+slide("imgs/slides/slider-rouge.jpg", "2", "2", "Marimekko fabric")
+							+slide("imgs/slides/slider-wall.jpg", "3", "3", "Wall pattern")
 
 						button(aria-pressed="false" aria-label="Next slide").slide-button.slide-button__prev &#10094;
 						button(aria-pressed="false" aria-label="Previous slide").slide-button.slide-button__next &#10095;
@@ -113,10 +113,10 @@ html(lang="en")
 								a(href= $href target="_blank" rel="noopener noreferrer" aria-label= $aria).brands-list__item-link
 									img(src= $src alt= $alt).brands-list__item-img
 
-						+brand("https://www.ikea.com", "Go to IKEA site", "../imgs/brand-IKEA.png", "IKEA")
-						+brand("https://www.fermliving.com", "Go to Ferm Living", "../imgs/brand-ferm.svg", "Ferm Living")
-						+brand("http://string.se", "Go to String site", "../imgs/brand-string.svg", "String")
-						+brand("https://muuto.com", "Go to Muuto site", "../imgs/brand-muuto.svg", "Muuto")
+						+brand("https://www.ikea.com", "Go to IKEA site", "imgs/brand-IKEA.png", "IKEA")
+						+brand("https://www.fermliving.com", "Go to Ferm Living", "imgs/brand-ferm.svg", "Ferm Living")
+						+brand("http://string.se", "Go to String site", "imgs/brand-string.svg", "String")
+						+brand("https://muuto.com", "Go to Muuto site", "imgs/brand-muuto.svg", "Muuto")
 
 		//- Footer
 		footer.footer

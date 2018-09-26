@@ -4,8 +4,17 @@
 .menu__list
 .container-menu__list
 	display flex
+	flex-wrap wrap
+	justify-content center
+	+media(md)
+		justify-content start
 	
 .menu
+	// Adaptive styles
+	margin-top 14px
+	+media(md)
+		margin-top 0
+	
 	&__list
 		list-style none
 	&__link
@@ -16,16 +25,17 @@
 		display block
 		position relative
 		border-bottom 2px solid $brand-3
-		&:after
-			content ""
-			background $brand-3
-			opacity 0.3
-			width 100%
-			height 0
-			position absolute
-			bottom 0
-			left 0
-			transition all .2s cubic-bezier(0.445, 0.05, 0.55, 0.95)
+		+media(md)
+			&:after
+				content ""
+				background $brand-3
+				opacity 0.3
+				width 100%
+				height 0
+				position absolute
+				bottom 0
+				left 0
+				transition all .2s cubic-bezier(0.445, 0.05, 0.55, 0.95)
 		
 .menu__link:hover .menu__name:after
 	height 100%

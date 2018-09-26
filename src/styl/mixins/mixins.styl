@@ -1,0 +1,35 @@
+// ===================================================================================================================
+// Variables
+// ===================================================================================================================
+
+// Array of breakpoints and width
+$breakpoints-and-widths = {
+	// Extra small screen (phone)
+	'xs': {
+		"breakpoint": "0",
+		"container-width": "0"
+	},
+	// Small screen (phone)
+	'sm': {
+		"breakpoint": "576px",
+		"container-width": "540px"
+	},
+	// Medium screen (tablet)
+	'md': {
+		"breakpoint": "768px",
+		"container-width": "720px"
+	},
+	// Large screen (desktop)
+	'lg': {
+		"breakpoint": "992px",
+		"container-width": "960px"
+	}
+}
+
+// Media query
+
+media($breakpoint-name)
+	$val = $breakpoints-and-widths[$breakpoint-name]
+	if $val["breakpoint"] != 0
+		@media (min-width: unquote($val["breakpoint"]))
+			{block}

@@ -1,5 +1,3 @@
-//include /-helpers/mixins
-
 doctype html
 html(lang="en")
 	head
@@ -12,11 +10,11 @@ html(lang="en")
 
 	body.grid-layout
 
-		// Header
+		//- Header
 		header.header
 			.container.container-flex
 
-				// Logo
+				//- Logo
 				.header-logo
 					a(href="#" aria-label="Back to main page")
 						img(src="../imgs/logo.svg" alt="Site logo").logo-img
@@ -24,13 +22,13 @@ html(lang="en")
 						.logo-text__title Scandi Design
 						.logo-text__subtitle Simple & perfect
 
-				// Search field
+				//- Search field
 				.header-search
 					form.search-form
-						input(type="search" name="search" aria-label="Search through site content").search-field
-						button(type="submit").search-btn
+						input(type="search" name="search").search-field
+						button(type="submit" aria-label="Search").search-btn
 
-				// Main menu
+				//- Main menu
 				nav.menu
 					ul.menu__list
 						each val in ["Houses", "Rooms", "Furniture", "Decorations", "Accessories", "Shops"]
@@ -38,12 +36,12 @@ html(lang="en")
 								a(href="#").menu__link
 									span.menu__name= val
 
-		// Main content
+		//- Main content
 		.content
 			.container
 				h1.page-heading You are <span class="repaint">welcome</span>
 
-				// Slider
+				//- Slider
 				.container-carousel
 					.carousel
 						ul.carousel-list
@@ -56,8 +54,8 @@ html(lang="en")
 							+slide("../imgs/slides/slider-rouge.jpg", "2", "2", "Marimekko fabric")
 							+slide("../imgs/slides/slider-wall.jpg", "3", "3", "Wall pattern")
 
-						button(role="button" aria-pressed="false" aria-label="Next slide").slide-button.slide-button__prev &#10094;
-						button(role="button" aria-pressed="false" aria-label="Previous slide").slide-button.slide-button__next &#10095;
+						button(aria-pressed="false" aria-label="Next slide").slide-button.slide-button__prev &#10094;
+						button(aria-pressed="false" aria-label="Previous slide").slide-button.slide-button__next &#10095;
 
 						.carousel-dots
 
@@ -68,9 +66,8 @@ html(lang="en")
 							.dot.js-dot-active
 							+repeat(2)
 
-				// Gallery
+				//- Gallery
 
-				// todo Заменить на цикл!
 				mixin galletyImg($aria, $numCard, $heightMod, $h, $text)
 					a(class="card card--" + $numCard + " card--height-" + $heightMod href="#" aria-label=$aria)
 						div(class="card-img card-img--" + $numCard)
@@ -81,16 +78,16 @@ html(lang="en")
 								.card__text=$text
 
 				.container-gallery
-					+galletyImg("", "1", "1", "Living Rooms", "A living room is a room in a residential house or apartment for relaxing and socializing.")
-					+galletyImg("", "2", "2", "Kitchens", "A kitchen is a room or part of a room used for cooking.")
-					+galletyImg("", "3", "2", "Bed Rooms", "A bedroom is a room where people sleep.")
-					+galletyImg("", "4", "2", "Bath Rooms", "A bathroom is a room in the home for personal hygiene activities.")
-					+galletyImg("", "5", "2", "Paintings", "A painting is a piece of art. It can be posters or pictures.")
-					+galletyImg("", "6", "1", "Lamps")
-					+galletyImg("", "7", "2", "Materials")
-					+galletyImg("", "8", "2", "Furniture")
+					+galletyImg("Living rooms gallery", "1", "1", "Living Rooms", "A living room is a room in a residential house or apartment for relaxing and socializing.")
+					+galletyImg("Kitchens gallery", "2", "2", "Kitchens", "A kitchen is a room or part of a room used for cooking.")
+					+galletyImg("Bed rooms gallery", "3", "2", "Bed Rooms", "A bedroom is a room where people sleep.")
+					+galletyImg("Bath rooms gallery", "4", "2", "Bath Rooms", "A bathroom is a room in the home for personal hygiene activities.")
+					+galletyImg("Paintings gallery", "5", "2", "Paintings", "A painting is a piece of art. It can be posters or pictures.")
+					+galletyImg("Lamps gallery", "6", "1", "Lamps")
+					+galletyImg("Materials gallery", "7", "2", "Materials")
+					+galletyImg("Furniture gallery", "8", "2", "Furniture")
 
-				// Feature
+				//- Feature
 				main.container-feature
 
 					mixin feature($heading, $numImg, $text)
@@ -107,7 +104,7 @@ html(lang="en")
 					.feature-item
 						+feature("Materials", "4", "Scandinavian design principles promote eco-friendly homes with organic, sustainable building materials for flooring, walls, siding and roofing.")
 
-				// Brands
+				//- Brands
 				.container-brands
 					ul.brands-list
 
@@ -117,11 +114,11 @@ html(lang="en")
 									img(src= $src alt= $alt).brands-list__item-img
 
 						+brand("https://www.ikea.com", "Go to IKEA site", "../imgs/brand-IKEA.png", "IKEA")
-						+brand("https://gronandwhite.com", "Go to Groen and White site", "../imgs/brand-gron-white.png", "Groen and White")
+						+brand("https://www.fermliving.com", "Go to Ferm Living", "../imgs/brand-ferm.svg", "Ferm Living")
 						+brand("http://string.se", "Go to String site", "../imgs/brand-string.svg", "String")
 						+brand("https://muuto.com", "Go to Muuto site", "../imgs/brand-muuto.svg", "Muuto")
 
-		// Footer
+		//- Footer
 		footer.footer
 			.container
 				.footer-social
@@ -129,13 +126,13 @@ html(lang="en")
 
 						mixin spriteBtn($aria, $modifier)
 							li.social-links__item
-								a(href="#" target="_blank" rel="noopener noreferrer" aria-label= $aria).social-link(class="social-link--" + $modifier)
+								a(href="#" target="_blank" rel="noopener noreferrer" aria-label= $aria class="social-link--" + $modifier).social-link
 
 						+spriteBtn("Facebook", "fb")
 						+spriteBtn("Instagram", "ig")
 						+spriteBtn("Pinterest", "pin")
 				.footer-right © With <span class="repaint">♥</span> Scandi team, 2018
-				.footer-source The source code is hosted on <a href="https://github.com/TatianaFokina/scandi-design" class="list-item-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+				.footer-source See source on <a href="https://github.com/TatianaFokina/scandi-design" class="list-item-link" target="_blank" rel="noopener noreferrer">GitHub</a>
 
-	script(src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-	script(src="js/all.js")
+		script(src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="js/all.js")

@@ -1,8 +1,12 @@
 .footer .container
 	display flex
-	flex-direction row
 	align-items center
-	justify-content space-between
+	flex-wrap wrap
+	// Adaptive style
+	flex-direction column
+	+media(md)
+		flex-direction row
+		justify-content space-between
 
 .footer
 	padding 20px 0
@@ -37,4 +41,14 @@
 	// Hover effect
 	&:hover
 		background-position-y -36px
-	
+		
+.footer-right
+	margin-top 20px
+
+.footer-source
+	margin-top 30px
+
+.footer-source
+.footer-right
+	+media(md)
+		margin-top 0

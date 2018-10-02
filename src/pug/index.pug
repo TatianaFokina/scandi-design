@@ -25,7 +25,7 @@ html(lang="en")
 				//- Search field
 				.header-search
 					form.search-form
-						input(type="search" name="search").search-field
+						input(type="search" name="search" aria-label="Search something on Scandi Design").search-field
 						button(type="submit" aria-label="Search").search-btn
 
 				//- Main menu
@@ -74,7 +74,7 @@ html(lang="en")
 						.card__overlay
 						.card__content-wrp
 							.card__content
-								.card__title=$h
+								.card__title(role="heading" aria-level="2")=$h
 								.card__text=$text
 
 				.container-gallery

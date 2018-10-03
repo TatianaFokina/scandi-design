@@ -14,11 +14,14 @@
 
 .logo
 	&-img
-		width 88px
-		height 100px
 		// Adaptive styles
+		margin-bottom 15px
+		height 67px
+		+media(md)
+			height 77px
 		+media(lg)
-			width 123px
+			margin-bottom 0
+			height 90px
 	&-text
 		margin-left 20px
 		// Adaptive styles
